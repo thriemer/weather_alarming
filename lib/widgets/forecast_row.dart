@@ -12,11 +12,11 @@ class WeatherForecastRow extends StatelessWidget {
   final ScrollController? scrollController;
 
   const WeatherForecastRow({
-    Key? key,
+    super.key,
     required this.forecasts,
     this.alarmState,
     this.scrollController,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

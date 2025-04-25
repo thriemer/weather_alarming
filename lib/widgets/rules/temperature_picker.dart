@@ -4,7 +4,7 @@ class TemperaturePicker extends StatefulWidget {
   final Function(double, double) onRangeSelected;
   final RangeValues initialValues;
 
-  const TemperaturePicker({
+  const TemperaturePicker({super.key, 
     required this.onRangeSelected,
     this.initialValues = const RangeValues(10, 30),
   });

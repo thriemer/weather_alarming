@@ -6,6 +6,8 @@ import 'package:weather_alarming/screens/alarm_edit_screen.dart';
 import 'package:weather_alarming/widgets/forecast_row.dart';
 
 class AlarmList extends StatefulWidget {
+  const AlarmList({super.key});
+
   @override
   State<StatefulWidget> createState() => _AlarmListState();
 }

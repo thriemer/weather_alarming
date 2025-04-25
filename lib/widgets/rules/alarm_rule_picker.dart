@@ -7,7 +7,7 @@ class AlarmRulePicker extends StatefulWidget {
   final Function(List<AlarmRule>) onRulesChanged;
   final List<AlarmRule> initialRules;
 
-  const AlarmRulePicker({
+  const AlarmRulePicker({super.key, 
     required this.onRulesChanged,
     this.initialRules = const [],
   });
@@ -41,7 +41,7 @@ class _AlarmRulePickerState extends State<AlarmRulePicker> {
       case TemperatureAlarmRule.TEMPERATURE_ALARM_RULE_TYPE:
         return TemperatureAlarmRule();
       default:
-        throw StateError("Type ${type} is not a valid Alarm Rule");
+        throw StateError("Type $type is not a valid Alarm Rule");
     }
   }
 

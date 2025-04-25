@@ -4,7 +4,7 @@ class WindDirectionPicker extends StatefulWidget {
   final Function(List<String>) onDirectionSelected;
   final List<String> initialDirections;
 
-  const WindDirectionPicker({
+  const WindDirectionPicker({super.key, 
     required this.onDirectionSelected,
     this.initialDirections = const [],
   });
@@ -25,7 +25,7 @@ class _WindDirectionPickerState extends State<WindDirectionPicker> {
     'S',
     'SE',
   ];
-  List<bool> _isSelected = List.filled(9, false);
+  final List<bool> _isSelected = List.filled(9, false);
 
   void publishSelectedDirections() {
     List<String> selectedDirections = [];

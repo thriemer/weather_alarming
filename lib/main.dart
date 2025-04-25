@@ -1,14 +1,33 @@
-import 'package:background_fetch/background_fetch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_alarming/models/models.dart';
 import 'package:weather_alarming/screens/alarm_edit_screen.dart';
 import 'package:weather_alarming/widgets/alarm_list_item.dart';
+import 'package:background_fetch/background_fetch.dart';
+
+void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  String taskId = task.taskId;
+  bool isTimeout = task.timeout;
+  if (isTimeout) {
+    // This task has exceeded its allowed running-time.
+    // You must stop what you're doing and immediately .finish(taskId)
+    print("[BackgroundFetch] Headless task timed-out: $taskId");
+    BackgroundFetch.finish(taskId);
+    return;
+  }
+  print('[BackgroundFetch] Headless event received.');
+  // Do your work here...
+  BackgroundFetch.finish(taskId);
+}
 
 void main() {
   runApp(
-    ChangeNotifierProvider(create: (ctx) => AppState(), child: const MyApp()),
+    ChangeNotifierProvider.value(
+      value: AppState.instance,
+      child: const MyApp(),
+    ),
   );
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatelessWidget {
@@ -46,13 +65,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<AppState>().loadFromDisk();
-   //TODO: setupWeatherUpdater();
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done

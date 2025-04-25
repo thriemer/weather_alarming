@@ -72,6 +72,12 @@ class AlarmState {
 class AppState extends ChangeNotifier {
   static const String ALARM_DEFINITIONS_KEY_NAME = "alarmDefinitions";
 
+  static final AppState instance = AppState._internal();
+
+  AppState._internal(){
+    loadFromDisk();
+  }
+
   final List<AlarmDefinition> _alarmDefinitions = [];
 
   UnmodifiableListView<AlarmDefinition> get alarmDefinitions =>

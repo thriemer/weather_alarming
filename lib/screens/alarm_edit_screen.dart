@@ -10,7 +10,7 @@ import '../widgets/location_picker.dart';
 class AlarmEditScreen extends StatefulWidget {
   final AlarmDefinition? alarm;
 
-  AlarmEditScreen({this.alarm});
+  const AlarmEditScreen({super.key, this.alarm});
 
   @override
   _AlarmEditScreenState createState() => _AlarmEditScreenState();
