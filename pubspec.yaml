@@ -41,7 +41,11 @@ dependencies:
   open_meteo: ^2.0.3
   flutter_map: ^8.1.1
   linked_scroll_controller: ^0.2.0
-  background_fetch: ^1.3.8
+  workmanager:
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager.git
+      path: workmanager
+      ref: main
 
   latlong2: any
   collection: any

@@ -3,31 +3,34 @@ import 'package:provider/provider.dart';
 import 'package:weather_alarming/models/models.dart';
 import 'package:weather_alarming/screens/alarm_edit_screen.dart';
 import 'package:weather_alarming/widgets/alarm_list_item.dart';
-import 'package:background_fetch/background_fetch.dart';
+import 'package:workmanager/workmanager.dart';
 
-void backgroundFetchHeadlessTask(HeadlessTask task) async {
-  String taskId = task.taskId;
-  bool isTimeout = task.timeout;
-  if (isTimeout) {
-    // This task has exceeded its allowed running-time.
-    // You must stop what you're doing and immediately .finish(taskId)
-    print("[BackgroundFetch] Headless task timed-out: $taskId");
-    BackgroundFetch.finish(taskId);
-    return;
-  }
-  print('[BackgroundFetch] Headless event received.');
-  // Do your work here...
-  BackgroundFetch.finish(taskId);
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    print("I was executed");
+    return true;
+  });
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(
+    callbackDispatcher,
+    isInDebugMode: false, // Set to true for debugging
+  );
+
+  Workmanager().registerPeriodicTask(
+    'api-check-task',
+    'apiCheckTask',
+    frequency: const Duration(minutes: 15),
+    constraints: Constraints(networkType: NetworkType.connected),
+  );
   runApp(
     ChangeNotifierProvider.value(
       value: AppState.instance,
       child: const MyApp(),
     ),
   );
-  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatelessWidget {
